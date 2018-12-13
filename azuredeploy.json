@@ -55,22 +55,6 @@
         "Server2016"
       ]
     },
-    "availabilitySetName": {
-      "defaultValue": "MyAvailabilitySet",
-      "type": "string",
-      "metadata": {
-        "description": "Availability Set Name where the VM will be placed"
-      }
-    },
-    "dnsPrefixForPublicIP": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 14,
-      "defaultValue": "[uniqueString(resourceGroup().id)]",
-      "metadata": {
-        "description": "Globally unique DNS prefix for the Public IPs used to access the Virtual Machines"
-      }
-    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -140,19 +124,6 @@
         "displayName": "diagnosticStorageAccount"
       },
       "kind": "Storage"
-    },
-    {
-      "type": "Microsoft.Compute/availabilitySets",
-      "name": "[parameters('availabilitySetName')]",
-      "apiVersion": "2017-03-30",
-      "location": "[parameters('location')]",
-      "properties": {
-        "platformFaultDomainCount": "[variables('availabilitySetPlatformFaultDomainCount')]",
-        "platformUpdateDomainCount": "[variables('availabilitySetPlatformUpdateDomainCount')]"
-      },
-      "sku": {
-        "name": "Aligned"
-      }
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
@@ -264,7 +235,7 @@
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[concat(parameters('dnsPrefixForPublicIP'), copyIndex(1))]"
+          "domainNameLabel": ""
         }
       }
     }
